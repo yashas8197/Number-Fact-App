@@ -44,28 +44,39 @@
 
 
     function numberFactFetch() {
-      let number = numberInput.value
+      let number = numberInput.value.trim()
       console.log(number)
-      let API_URL = 'http://numbersapi.com/' + number
+      let API_URL; 
+      
+      if(number === ""){
+        API_URL = 'http://numbersapi.com/random' 
+        factText.textContent = '';
+      }else{
+        API_URL = 'http://numbersapi.com/' + number
+      }
+
       fetch(API_URL)
         .then(function (response) {
           return response.text()
         })
         .then(function (data) {
-            console.log(data)
-            if(number !== " "){
-                factText.innerHTML = data
+                factText.textContent = data
                 fact.style.display = 'block'
-            }else{
-                fact.style.display = 'none'
-            }
-          
         })
+        .catch(function(error) {
+        console.log('Error fetching data:', error);
+      });
+      
     }
+
+    
+       
+      
 
 
 
   </script>
+  
 </body>
 
 </html>
